@@ -25,6 +25,7 @@ import java.util.List;
 public class RouteService {
     @Autowired
     RouteMapper routeMapper;
+
     public List<Route> findRouteByUserName(String userName){
         return routeMapper.findRoutesByUserName(userName);
     }
@@ -34,30 +35,32 @@ public class RouteService {
         return routeMapper.findAllRoute();
     }
 
-    public void addRoute(String routeName,String routeInstruct,int groupId){
-        routeMapper.addRoute(routeName, routeInstruct, groupId);
+    public void addRoute(String routeName,String routeInstruct,int groupId,String outIp, String info){
+        routeMapper.addRoute(routeName, routeInstruct, groupId,outIp,info);
     }
 
     public void deleteRoute(String routeName){
         routeMapper.deleteRoute(routeName);
     }
 
-    public void changeRoute(String info, String routeName){
-        String clientAddress = info.split(":")[0];
-        String clientPort = info.split(":")[1];
-        String instruct = routeMapper.getInstruct(routeName);
+    public void changeRoute(String info, String routeName,String userName){
+        Route route = routeMapper.findRouteByRouteName(routeName);
+        routeMapper.updateUserCur(routeName,userName);
+        String instruct = route.getRouteInstruct();
         String remoteAddress = instruct.split(":")[0];
         String remotePort = instruct.split(":")[1];
+        String outIp = route.getOutIp();
+        String script = routeMapper.getScript(routeName);
+        String[] cmd = {script,info,remoteAddress,remotePort,outIp};
         /*try{
-            Process process = Runtime.getRuntime().exec("echo password | sudo");
+            Process process = Runtime.getRuntime().exec(cmd);
             process.waitFor();
-            InputStream in = process.getInputStream();
-            BufferedReader read = new BufferedReader(new InputStreamReader(in));
-            String result = read.readLine();
-            System.out.println("command result:     "+result);
-
         }catch (Exception e){
             e.printStackTrace();
         }*/
+    }
+
+    public void updateRoute(String route_instruct,String out_ip,String info,int script_id,int group_id,String route_name){
+        routeMapper.updateRoute(route_instruct, out_ip, info, script_id, group_id, route_name);
     }
 }

@@ -16,128 +16,220 @@
 </head>
 <body>
 <%@include file="head.html"%>
-        <!-- start: Content -->
-        <div id="content" class="span10">
-            <div class="row-fluid">
-                <ul id="myTab" class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#user" data-toggle="tab">
-                            用户
-                        </a>
-                    </li>
-                    <li><a href="#route" data-toggle="tab">路由</a></li>
-                </ul>
-                <div id="myTabContent" class="tab-content">
-                    <div class="box span12 tab-pane fade in active" id="user">
-                        <div class="box-header" data-original-title="">
-                            <h2><span class="break"></span></h2>
-                            <div class="box-icon">
-                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal_user" style="float: left">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-content">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>IP:Port</th>
-                                    <th>Routes</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="user" items="${page_user.list}">
-                                    <tr>
-                                        <td >${user.userName}</td>
-                                        <td>${user.info}</td>
-                                        <td>
-                                            <form method="post">
-                                                <input type="hidden" value="${user.userName}" name="username">
-                                                <input type="hidden" value="${user.info}" name="info">
-                                                <select name="route">
-                                                    <c:forEach items="${user.routeList}" var="route">
-                                                        <option>
-                                                            ${route.routeName}
-                                                        </option>
-                                                    </c:forEach>
-                                                </select>
-                                                <input class="btn btn-success btn-sm" type="button" value="select" onclick="changeRoute(this)">
-                                            </form>
-                                        </td>
-                                        <td class="center">
-                                            <a class="btn btn-info" href="#">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                            <a class="btn btn-danger" href="#" onclick="deleteUser(this)">
-                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                        <nav aria-label="...">
-                            <ul class="pager">
-                                <li class="previous">
-                                    <a href="?pageNum=${page_user.pageNum-1}">
-                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-                                <li class="previous">
-                                    <a href="?pageNum=${page_user.pageNum+1}">
-                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+<!-- start: Content -->
+<div id="content" class="span10">
+    <div class="row-fluid">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+                <a href="#user" data-toggle="tab">
+                    用户
+                </a>
+            </li>
+            <li><a href="#route" data-toggle="tab">路由</a></li>
+            <li><a href="#diy-script" data-toggle="tab">脚本</a></li>
+            <li><a href="#admin" data-toggle="tab">信息</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="box span12 tab-pane fade in active container-fluid" id="user">
+                <div class="box-header" data-original-title="">
+                    <h2><span class="break"></span></h2>
+                    <div class="box-icon">
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal_user" style="float: left">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                        </button>
                     </div>
-                    <div class="box span12 tab-pane fade" id="route">
-                        <div class="box-header" data-original-title="">
-                            <h2><span class="break"></span></h2>
-                            <div class="box-icon">
-                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal_route" style="float: left">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
-                                </button>
+                </div>
+                <div class="box-content">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>IP:Port</th>
+                            <th>Routes</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="user" items="${page_user.list}">
+                            <tr>
+                                <td >${user.userName}</td>
+                                <td>${user.info}</td>
+                                <td>
+                                    <form method="post">
+                                        <input type="hidden" value="${user.userName}" name="username">
+                                        <input type="hidden" value="${user.info}" name="info">
+                                        <select name="route">
+                                            <c:forEach items="${user.routeList}" var="route">
+                                                <option>
+                                                    ${route.routeName}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input class="btn btn-success btn-sm" type="button" value="select" onclick="changeRoute(this)">
+                                    </form>
+                                </td>
+                                <td class="center">
+                                    <a class="btn btn-info" href="#" onclick="updateUser(this)">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-danger" href="#" onclick="deleteUser(this)">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <li class="previous">
+                            <a href="?pageNum=${page_user.pageNum-1}">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                        <li class="previous">
+                            <a href="?pageNum=${page_user.pageNum+1}">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="box span12 tab-pane fade container-fluid" id="route">
+                <div class="box-header" data-original-title="">
+                    <h2><span class="break"></span></h2>
+                    <div class="box-icon">
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal_route" style="float: left">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                        </button>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>IP:Port</th>
+                            <th>Out IP</th>
+                            <th>Info</th>
+                            <th>Type</th>
+                            <th>Script</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="route" items="${page_route.list}">
+                            <tr>
+                                <td >${route.routeName}</td>
+                                <td>${route.routeInstruct}</td>
+                                <td>${route.outIp}</td>
+                                <td>${route.info}</td>
+                                <td>${route.groupId}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${route.scriptId == 0}">
+                                            无
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${route.scriptId}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td class="center">
+                                    <a class="btn btn-info" href="#" onclick="updateRoute(this)">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-danger" href="#" onclick="deleteRoute(this)">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="box span12 tab-pane fade container-fluid" id="admin">
+                <div class="box-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3 form-box">
+                                <form action="/user/update">
+                                    <input type="hidden" name="old_name" value="${pageContext.request.remoteUser}">
+                                    <div class="form-group">
+                                        <label for="new_name">Name</label>
+                                        <input type="text" class="form-control" id="new_name" name="new_name" value="${pageContext.request.remoteUser}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">New Password</label>
+                                        <input type="text" class="form-control" id="password" placeholder="New Password" name="password">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                </form>
                             </div>
-                        </div>
-                        <div class="box-content">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th>name</th>
-                                    <th>IP:Port</th>
-                                    <th>type</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="route" items="${page_route.list}">
-                                    <tr>
-                                        <td >${route.routeName}</td>
-                                        <td>${route.routeInstruct}</td>
-                                        <td>
-                                            ${route.groupId}
-                                        </td>
-                                        <td class="center">
-                                            <a class="btn btn-info" href="#">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                            <a class="btn btn-danger" href="#" onclick="deleteRoute(this)">
-                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="box span12 tab-pane fade container-fluid" id="diy-script">
+                <div class="box-header">
+                    <h2><span class="break"></span></h2>
+                    <div class="box-icon">
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal_script" style="float: left">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                        </button>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <table class="table table-striped table-hover">
+                        <colgroup>
+                            <col style="width:10%">
+                            <col style="width:25%">
+                            <col style="width:30%">
+                            <col style="width:5%">
+                        </colgroup>
+                        <thead>
+                        <tr >
+                            <th>No.</th>
+                            <th class="text-center">Script</th>
+                            <th class="text-center">Routes</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="script" items="${scriptList}">
+                            <tr>
+                                <td>${script.scriptId}</td>
+                                <td>${script.content}</td>
+                                <td >
+                                    <ul class="list-unstyled">
+                                        <c:forEach items="${script.routeList}" var="route">
+                                            <li>
+                                                <dl class="dl-horizontal">
+                                                <dt>${route.routeName}</dt>
+                                                <dd>${route.routeInstruct} ==> ${route.outIp} & ${route.info}</dd>
+                                                </dl>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </td>
+                                <td class="center">
+                                    <a class="btn btn-info" href="#">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-danger" href="#" onclick="deleteScript(this)">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <!-- end: Content -->
-
     </div>
 </div>
 <div class="modal fade" id="myModal_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -185,12 +277,18 @@
                 <h4 class="modal-title">新线路...</h4>
             </div>
             <div class="modal-body">
-                <form method="post" id="form2">
+                <form method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Route name..." name="route_name">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="eg:192.168.1.1:8080" name="route_instruct">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Out IP" name="route_out_ip">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Info..." name="route_info">
                     </div>
                     <div class="form-group">
                         <select name="group" id="group2">
@@ -207,6 +305,102 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="addRoute(this)">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal_script" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新脚本...</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <textarea placeholder="$1:客户端口  $2:服务ip  $3:服务端口  $4:出口ip" name="content"  class="form-control input-lg" rows="5"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addScript(this)">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal_updateScript" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <input id="route_name" type="hidden" name="route_name">
+                    <div class="form-group">
+                        <label for="ipport">IP:Port</label>
+                        <input type="text" class="form-control" id="ipport" name="route_instruct">
+                    </div>
+                    <div class="form-group">
+                        <label for="outip">Out IP</label>
+                        <input type="text" class="form-control" id="outip" name="route_out_ip">
+                    </div>
+                    <div class="form-group">
+                        <label for="info">Info</label>
+                        <input type="text" class="form-control" id="info" name="route_info">
+                    </div>
+                    <div class="form-group">
+                        <label for="sip">Script</label>
+                        <select id="sip" name="script_id">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <c:forEach var="script" items="${scriptList}">
+                                <option>${script.scriptId}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select id="type" name="group_id">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveRoute(this)">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal_updateUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <input type="hidden" name="username" id="username">
+                    <div class="form-group">
+                        <label for="port">Port</label>
+                        <input type="text" class="form-control" id="port" name="user_port">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveUser(this)">Update</button>
             </div>
         </div>
     </div>

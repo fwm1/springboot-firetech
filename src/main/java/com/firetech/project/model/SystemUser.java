@@ -27,9 +27,18 @@ public class SystemUser implements UserDetails{
     private int groupId;
     private int role;
     private String info;
+    private String currentRoute;
     private List<Route> routeList;
 
     public SystemUser(){}
+
+    public String getCurrentRoute() {
+        return currentRoute;
+    }
+
+    public void setCurrentRoute(String currentRoute) {
+        this.currentRoute = currentRoute;
+    }
 
     public String getInfo() {
         return info;

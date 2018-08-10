@@ -17,19 +17,32 @@ import org.springframework.web.servlet.ModelAndView;
  * @Version 1.0
  **/
 @Controller
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/user/addUser")
-    @ResponseBody
+    @RequestMapping("/addUser")
     public void addUser(@RequestParam("username")String userName, @RequestParam("password")String password,
                         @RequestParam("group")int group,@RequestParam("info")String info){
         userService.addUser(userName, password, group,info);
     }
-    @RequestMapping("/user/delete")
+    @RequestMapping("/delete")
     @ResponseBody
     public void deleteUser(@RequestParam("username")String username){
         userService.deleteUser(username);
+    }
+
+    @RequestMapping("/update")
+    public String updateUser(@RequestParam("new_name")String newName, @RequestParam("password")String password,
+                           @RequestParam("old_name")String oldName){
+        userService.updateAdmin(newName, password, oldName);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping("/updatePort")
+    @ResponseBody
+    public void updateUser(@RequestParam("user_port")String info, @RequestParam("username")String username){
+        userService.updateUser(info, username);
     }
 }

@@ -1,8 +1,10 @@
 package com.firetech.project.controller;
 
 import com.firetech.project.model.Route;
+import com.firetech.project.model.Script;
 import com.firetech.project.model.SystemUser;
 import com.firetech.project.service.RouteService;
+import com.firetech.project.service.ScriptService;
 import com.firetech.project.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -32,6 +34,8 @@ public class MainController {
     UserService userService;
     @Autowired
     RouteService routeService;
+    @Autowired
+    ScriptService scriptService;
 
     @RequestMapping("/")
     public String index(){
@@ -62,9 +66,12 @@ public class MainController {
         PageInfo<SystemUser> page_user = new PageInfo<>(userList);
         List<Route> routeList = routeService.findAllRoute(pageNum, pageSize);
         PageInfo<Route> page_route = new PageInfo<>(routeList);
+
+        List<Script> scriptList = scriptService.findAllScript();
         ModelAndView mv = new ModelAndView();
         mv.addObject("page_user",page_user);
         mv.addObject("page_route",page_route);
+        mv.addObject("scriptList",scriptList);
         mv.setViewName("admin");
         return mv;
     }
@@ -77,7 +84,9 @@ public class MainController {
         ModelAndView mv = new ModelAndView();
         PageInfo<Route> page = new PageInfo<>(routeList);
         mv.addObject("page",page);
-        mv.addObject("info",user.getInfo());
+        String currentRoute = userService.findCurrentRoute(user.getUsername());
+        user.setCurrentRoute(currentRoute);
+        mv.addObject("user",user);
         mv.setViewName("index");
         return mv;
     }

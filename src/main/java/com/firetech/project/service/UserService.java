@@ -55,4 +55,16 @@ public class UserService implements UserDetailsService {
     public void deleteUser(String username){
         userMapper.deleteUser(username);
     }
+
+    public void updateAdmin(String newName,String rowPassword,String oldName){
+        String password = MD5Util.encode(rowPassword);
+        userMapper.updateAdmin(newName, password, oldName);
+    }
+    public String findCurrentRoute(String userName){
+        return userMapper.findCurrentRoute(userName);
+    }
+
+    public void updateUser(String info, String username){
+        userMapper.updateUser(info, username);
+    }
 }

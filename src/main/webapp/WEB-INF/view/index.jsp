@@ -49,6 +49,9 @@
                     <thead>
                     <tr>
                         <th>Routes</th>
+                        <th>Out Ip</th>
+                        <th>Info</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -59,9 +62,21 @@
                                 <form method="post">
                                     <input type="hidden" name="username" value="${pageContext.request.remoteUser}">
                                     <input type="hidden" name="route" value="${route.routeName}">
-                                    <input type="hidden" name="info" value="${info}">
+                                    <input type="hidden" name="info" value="${user.info}">
                                     ${route.routeName}
                                 </form>
+                            </td>
+                            <td>${route.outIp}</td>
+                            <td>${route.info}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${route.routeName == user.currentRoute}">
+                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                             <td>
                                 <button class="btn btn-info" onclick="changeRoute(this)">
@@ -78,7 +93,7 @@
             </div>
         </div><!--/span-->
             <div class="box span12 tab-pane fade" id="user">
-                ${info}
+                ${user.info}
             </div>
         </div>
     </div><!--/row-->
@@ -90,9 +105,12 @@
         $.ajax({
             type:'POST',
             url:'/route/change',
-            data:$(obj).parent().prev().children().serialize(),
+            data:$(obj).parent().parent().children().children().serialize(),
             success:function(){
-                alert("切换成功");
+                alert("已切换线路");
+                window.location.href="/index";
+            },error:function () {
+                alert("切换失败");
             }
         });
     }

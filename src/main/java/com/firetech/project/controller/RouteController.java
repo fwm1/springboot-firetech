@@ -25,19 +25,28 @@ public class RouteController {
 
     @RequestMapping(value = "/change",method = RequestMethod.POST)
     @ResponseBody
-    public void changeRoute(@RequestParam("info")String info, @RequestParam("route")String routeName){
-        routeService.changeRoute(info,routeName);
+    public void changeRoute(@RequestParam("info")String info, @RequestParam("route")String routeName,@RequestParam("username")String userName){
+        routeService.changeRoute(info,routeName,userName);
     }
 
     @RequestMapping(value = "/addRoute",method = RequestMethod.POST)
     @ResponseBody
-    public void addRoute(@RequestParam("route_name")String routeName,@RequestParam("route_instruct")String routeInstruct,@RequestParam("group")int groupId){
-        routeService.addRoute(routeName, routeInstruct, groupId);
+    public void addRoute(@RequestParam("route_name")String routeName,@RequestParam("route_instruct")String routeInstruct,@RequestParam("group")int groupId,
+                         @RequestParam("route_out_ip")String outIp,@RequestParam("route_info")String routeInfo){
+        routeService.addRoute(routeName, routeInstruct, groupId,outIp,routeInfo);
     }
 
     @RequestMapping(value = "/deleteRoute", method = RequestMethod.POST)
     @ResponseBody
     public void deleteRoute(@RequestParam("route_name")String routeName){
         routeService.deleteRoute(routeName);
+    }
+
+    @RequestMapping(value = "/updateRoute")
+    @ResponseBody
+    public void updateRoute(@RequestParam("route_instruct") String instruct, @RequestParam("route_out_ip") String outIp,
+                            @RequestParam("route_info") String info,@RequestParam("script_id") int scriptId,
+                            @RequestParam("group_id") int groupId,@RequestParam("route_name")String routeName){
+        routeService.updateRoute(instruct,outIp,info,scriptId,groupId,routeName);
     }
 }

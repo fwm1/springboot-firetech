@@ -13,8 +13,35 @@ import java.util.List;
 public class Route {
     private String routeName;
     private String routeInstruct;
+    private String outIp;
+    private String info;
     private int groupId;
+    private int scriptId;
     private List<SystemUser> userList;
+
+    public int getScriptId() {
+        return scriptId;
+    }
+
+    public void setScriptId(int scriptId) {
+        this.scriptId = scriptId;
+    }
+
+    public String getOutIp() {
+        return outIp;
+    }
+
+    public void setOutIp(String outIp) {
+        this.outIp = outIp;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public String getRouteName() {
         return routeName;

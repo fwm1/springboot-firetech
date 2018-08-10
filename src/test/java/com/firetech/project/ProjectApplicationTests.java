@@ -22,15 +22,6 @@ public class ProjectApplicationTests {
 	RouteMapper routeMapper;
 	@Test
 	public void contextLoads() {
-		List<SystemUser> userList = userMapper.selectAll();
-		for (SystemUser user:userList){
-			System.out.println(user.getUserName() + "   "+user.getRouteList().size());
-			if(user.getRouteList().size()>0){
-				for(Route route: user.getRouteList()){
-					System.out.println(route.getRouteName());
-				}
-			}
-		}
-	}
 
+	}
 }
