@@ -2,14 +2,13 @@ package com.firetech.project.service;
 
 import com.firetech.project.mapper.RouteMapper;
 import com.firetech.project.model.Route;
+import com.firetech.project.model.Script;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -50,12 +49,45 @@ public class RouteService {
         String remoteAddress = instruct.split(":")[0];
         String remotePort = instruct.split(":")[1];
         String outIp = route.getOutIp();
-        String script = routeMapper.getScript(routeName);
-        String[] cmd = {script,info,remoteAddress,remotePort,outIp};
-        /*try{
-            Process process = Runtime.getRuntime().exec(cmd);
-            process.waitFor();
-        }catch (Exception e){
+        Script script = routeMapper.getScript(routeName);
+
+        /*//获取当前路径
+        String curPath = System.getProperty("user.dir");
+        String shName = curPath+"/route_scripts/"+script.getScriptId()+".sh";
+        File file = new File(shName);
+        File fileParent = file.getParentFile();
+        FileWriter fw;
+        if (!file.exists()) {//如果文件不存在,创建文件并更改权限
+            try {
+                if(!fileParent.exists()){
+                    fileParent.mkdirs();
+                }
+                file.createNewFile();
+                fw = new FileWriter(file);
+                fw.write("#! /bin/sh\n"+script.getContent());
+                fw.flush();
+                fw.close();
+                Process process = Runtime.getRuntime().exec("chmod 777 "+shName);
+                process.waitFor();
+            } catch (IOException|InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+        String[] cmd = new String[]{shName,remoteAddress,remotePort,outIp};
+        Process ps = Runtime.getRuntime().exec(cmd);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(ps.getInputStream()));
+        StringBuffer sb = new StringBuffer();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        String result = sb.toString();
+
+        System.out.println(result);
+        } catch (Exception e) {
             e.printStackTrace();
         }*/
     }

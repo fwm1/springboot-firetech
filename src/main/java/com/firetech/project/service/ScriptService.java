@@ -33,4 +33,8 @@ public class ScriptService {
     public void addScript(String content){
         scriptMapper.addScript(content);
     }
+
+    public void updateScript(String content,int scriptId){
+        scriptMapper.updateScript(content,scriptId);
+    }
 }

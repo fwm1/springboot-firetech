@@ -17,6 +17,11 @@ public class Script {
 
     public Script(){}
 
+    public Script(int scriptId,String content){
+        this.scriptId = scriptId;
+        this.content = content;
+    }
+
     public List<Route> getRouteList() {
         return routeList;
     }

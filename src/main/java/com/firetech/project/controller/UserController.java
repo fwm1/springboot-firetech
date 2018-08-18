@@ -23,6 +23,7 @@ public class UserController {
     UserService userService;
 
     @RequestMapping("/addUser")
+    @ResponseBody
     public void addUser(@RequestParam("username")String userName, @RequestParam("password")String password,
                         @RequestParam("group")int group,@RequestParam("info")String info){
         userService.addUser(userName, password, group,info);

@@ -32,4 +32,7 @@ public interface ScriptMapper {
             )
     })
     List<Script> findAllScript();
+
+    @Update("update script_ set content=#{content} where script_id=#{script_id}")
+    void updateScript(@Param("content")String content, @Param("script_id")int script_id);
 }

@@ -34,7 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //允许所有用户访问"/"
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin").permitAll()
                 //其他地址的访问均需验证权限
                 .anyRequest().authenticated()
                 .and()
@@ -69,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/static/css/**","/static/js/**");
+        web.ignoring().antMatchers("/static/**");
     }
 
     @Bean

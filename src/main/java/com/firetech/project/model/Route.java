@@ -19,6 +19,16 @@ public class Route {
     private int scriptId;
     private List<SystemUser> userList;
 
+    public Route(){}
+    public Route(String routeName, String routeInstruct, String outIp, String info,int groupId,int scriptId) {
+        this.routeName = routeName;
+        this.routeInstruct = routeInstruct;
+        this.outIp = outIp;
+        this.info = info;
+        this.groupId = groupId;
+        this.scriptId = scriptId;
+    }
+
     public int getScriptId() {
         return scriptId;
     }

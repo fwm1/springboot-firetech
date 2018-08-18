@@ -1,13 +1,12 @@
 package com.firetech.project.controller;
 
-import com.firetech.project.mapper.RouteMapper;
+import com.alibaba.fastjson.JSONObject;
 import com.firetech.project.model.Route;
 import com.firetech.project.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @ClassName RouteController
@@ -31,9 +30,11 @@ public class RouteController {
 
     @RequestMapping(value = "/addRoute",method = RequestMethod.POST)
     @ResponseBody
-    public void addRoute(@RequestParam("route_name")String routeName,@RequestParam("route_instruct")String routeInstruct,@RequestParam("group")int groupId,
+    public String addRoute(@RequestParam("route_name")String routeName,@RequestParam("route_instruct")String routeInstruct,@RequestParam("group")int groupId,
                          @RequestParam("route_out_ip")String outIp,@RequestParam("route_info")String routeInfo){
         routeService.addRoute(routeName, routeInstruct, groupId,outIp,routeInfo);
+        Route route = new Route(routeName,routeInstruct,outIp,routeInfo,groupId,0);
+        return JSONObject.toJSONString(route);
     }
 
     @RequestMapping(value = "/deleteRoute", method = RequestMethod.POST)
@@ -49,4 +50,5 @@ public class RouteController {
                             @RequestParam("group_id") int groupId,@RequestParam("route_name")String routeName){
         routeService.updateRoute(instruct,outIp,info,scriptId,groupId,routeName);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.firetech.project.mapper;
 
 import com.firetech.project.model.Route;
+import com.firetech.project.model.Script;
 import javafx.scene.effect.SepiaTone;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
@@ -92,6 +93,10 @@ public interface RouteMapper {
     @Update("update user_ set cur_route=#{route_name} where user_name=#{user_name}")
     void updateUserCur(@Param("route_name")String routeName,@Param("user_name")String userName);
 
-    @Select("select content from script_ where script_id = (select script_id  from route_ where route_name = #{route_name})")
-    String getScript(@Param("route_name")String routeName);
+    @Select("select * from script_ where script_id = (select script_id  from route_ where route_name = #{route_name})")
+    @Results({
+            @Result(property = "scriptId",column = "script_id"),
+            @Result(property = "content",column = "content")
+    })
+    Script getScript(@Param("route_name")String routeName);
 }

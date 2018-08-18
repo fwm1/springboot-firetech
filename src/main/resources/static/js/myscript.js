@@ -37,19 +37,6 @@ function deleteUser(obj) {
         });
     }
 }
-function addRoute(obj) {
-    $.ajax({
-        type:'POST',
-        url:'/route/addRoute',
-        data:$(obj).parent().prev().children().serialize(),
-        success:function(){
-            window.location.href="/admin";
-        },error:function () {
-            alert("添加失败");
-        }
-    });
-    $('#myModal_route').modal('hide')
-}
 function deleteRoute(obj) {
     var confirmed = confirm("是否删除该线路？");
     if(confirmed){
@@ -59,36 +46,7 @@ function deleteRoute(obj) {
             type:'POST',
             url:'/route/deleteRoute?route_name='+route_name,
             success:function(){
-                window.location.href="/admin";
-            },error:function () {
-                alert("删除失败");
-            }
-        });
-    }
-}
-function addScript(obj) {
-    $.ajax({
-        type:'POST',
-        url:'/script/add',
-        data:$(obj).parent().prev().children().serialize(),
-        success:function(){
-            window.location.href="/admin";
-        },error:function () {
-            alert("添加失败");
-        }
-    });
-    $('#myModal_route').modal('hide')
-}
-function deleteScript(obj) {
-    var confirmed = confirm("是否删除该脚本？");
-    if(confirmed){
-        var script_id = $(obj).parent().prev().prev().prev().html();
-        $(obj).parents("tr").remove();
-        $.ajax({
-            type:'POST',
-            url:'/script/delete?script_id='+script_id,
-            success:function(){
-                window.location.href="/admin";
+
             },error:function () {
                 alert("删除失败");
             }
@@ -96,7 +54,7 @@ function deleteScript(obj) {
     }
 }
 function updateRoute(obj) {
-    var a = $('#myModal_updateScript');
+    var a = $('#myModal_updateRoute');
     var td = $(obj).parent().parent().find('td');
     var route_name = td.eq(0).html();
     var route_ins = td.eq(1).html();
@@ -159,4 +117,78 @@ function saveUser(obj) {
     });
     $('#myModal_route').modal('hide');
 }
+function addRoute(obj) {
+    $.ajax({
+        type:'POST',
+        url:'/route/addRoute',
+        data:$(obj).parent().prev().children().serialize(),
+        success:function(result){
+            var json = JSON.parse(result);
+            $('#route_table').append('<tr><td>'+json.routeName+'</td><td>'+json.routeInstruct+'</td><td>'
+                +json.outIp+'</td><td>'+json.info+'</td><td>'+json.groupId+'</td><td>'+(json.scriptId===0?'无':json.groupId) +'</td>'
+                +'<td class="center"><a class="btn btn-info" href="#" onclick="updateRoute(this)">' +
+                '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>' +
+                '<a class="btn btn-danger" href="#" onclick="deleteRoute(this)">' +
+                '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>' +
+                '</td></tr>');
+        },error:function () {
+            alert("添加失败");
+        }
+    });
+    $('#myModal_route').modal('hide')
+}
+function addScript(obj) {
+    $.ajax({
+        type:'POST',
+        url:'/script/add',
+        data:$(obj).parent().prev().children().serialize(),
+        success:function(result){
+            var script = JSON.parse(result);
+            $('#script_table').append('<tr><td>'+script.scriptId+'</td><td>'+script.content+'</td><td></td>'
+                +'<td class="center"><a class="btn btn-info" href="#" onclick="updateScript(this)">' +
+                '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>' +
+                '<a class="btn btn-danger" href="#" onclick="deleteScript(this)">' +
+                '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td><tr>');
+        },error:function () {
+            alert("添加失败");
+        }
+    });
+    $('#myModal_script').modal('hide')
+}
+function deleteScript(obj) {
+    var confirmed = confirm("是否删除该脚本？");
+    if(confirmed){
+        var script_id = $(obj).parent().prev().prev().prev().html();
+        $(obj).parents("tr").remove();
+        $.ajax({
+            type:'POST',
+            url:'/script/delete?script_id='+script_id,
+            success:function(){
 
+            },error:function () {
+                alert("删除失败");
+            }
+        });
+    }
+}
+function updateScript(obj) {
+    var a = $(obj).parent().prev().prev().html();
+    var b = $(obj).parent().prev().prev().prev().html();
+    $('#myModal_updateScript').modal();
+    $('#script_title').html(b);
+    $('#script_id').val(b);
+    $('#script_content').val(a);
+}
+function saveScript(obj) {
+    $.ajax({
+        type:'POST',
+        url:'/script/update',
+        data:$(obj).parent().prev().children().serialize(),
+        success:function(){
+            window.location.href="/admin";
+        },error:function () {
+            alert("修改失败");
+        }
+    });
+    $('#myModal_route').modal('hide');
+}

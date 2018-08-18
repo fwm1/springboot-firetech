@@ -20,14 +20,10 @@
 <div id="content" class="span10">
     <div class="row-fluid">
         <ul id="myTab" class="nav nav-tabs">
-            <li class="active">
-                <a href="#user" data-toggle="tab">
-                    用户
-                </a>
-            </li>
-            <li><a href="#route" data-toggle="tab">路由</a></li>
-            <li><a href="#diy-script" data-toggle="tab">脚本</a></li>
-            <li><a href="#admin" data-toggle="tab">信息</a></li>
+            <li class="active"><a href="#user" data-toggle="tab" id="a-user">用户</a></li>
+            <li><a href="#route" data-toggle="tab" id="a-route">路由</a></li>
+            <li><a href="#diy-script" data-toggle="tab" id="a-script">脚本</a></li>
+            <li><a href="#admin" data-toggle="tab" id="a-info">信息</a></li>
         </ul>
         <div id="myTabContent" class="tab-content">
             <div class="box span12 tab-pane fade in active container-fluid" id="user">
@@ -58,14 +54,19 @@
                                     <form method="post">
                                         <input type="hidden" value="${user.userName}" name="username">
                                         <input type="hidden" value="${user.info}" name="info">
-                                        <select name="route">
-                                            <c:forEach items="${user.routeList}" var="route">
-                                                <option>
-                                                    ${route.routeName}
-                                                </option>
+                                        <select name="route" style="border-radius:10px">
+                                            <c:forEach var="route" items="${user.routeList}">
+                                                <c:choose>
+                                                    <c:when test="${user.currentRoute eq route.routeName}">
+                                                        <option selected="selected">${route.routeName}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option>${route.routeName}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:forEach>
                                         </select>
-                                        <input class="btn btn-success btn-sm" type="button" value="select" onclick="changeRoute(this)">
+                                        <input class="btn btn-success btn-sm" type="button" value="select" style="border-radius: 10px" onclick="changeRoute(this)">
                                     </form>
                                 </td>
                                 <td class="center">
@@ -106,7 +107,7 @@
                     </div>
                 </div>
                 <div class="box-content">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" id="route_table">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -182,7 +183,7 @@
                     </div>
                 </div>
                 <div class="box-content">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" id="script_table">
                         <colgroup>
                             <col style="width:10%">
                             <col style="width:25%">
@@ -202,7 +203,7 @@
                             <tr>
                                 <td>${script.scriptId}</td>
                                 <td>${script.content}</td>
-                                <td >
+                                <td>
                                     <ul class="list-unstyled">
                                         <c:forEach items="${script.routeList}" var="route">
                                             <li>
@@ -215,7 +216,7 @@
                                     </ul>
                                 </td>
                                 <td class="center">
-                                    <a class="btn btn-info" href="#">
+                                    <a class="btn btn-info" href="#" onclick="updateScript(this)">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </a>
                                     <a class="btn btn-danger" href="#" onclick="deleteScript(this)">
@@ -229,9 +230,9 @@
                 </div>
             </div>
         </div>
-        <!-- end: Content -->
     </div>
 </div>
+<!-- end: Content -->
 <div class="modal fade" id="myModal_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -328,7 +329,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal_updateScript" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal_updateRoute" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -353,11 +354,6 @@
                     <div class="form-group">
                         <label for="sip">Script</label>
                         <select id="sip" name="script_id">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
                             <c:forEach var="script" items="${scriptList}">
                                 <option>${script.scriptId}</option>
                             </c:forEach>
@@ -405,6 +401,27 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal_updateScript" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="script_title"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <input name="script_id" type="hidden" id="script_id">
+                    <textarea name="content"  class="form-control input-lg" rows="5" id="script_content"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveScript(this)">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
 </script>
