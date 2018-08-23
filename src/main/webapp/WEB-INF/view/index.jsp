@@ -9,30 +9,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FireTech</title>
 </head>
 
-<body>
+<body style="background: lightgray">
 <%--只能静态导入,动态带入会报错no such dispacher--%>
 <%@include file="head.html"%>
-<table id="table_id_example" class="display">
-    <thead>
-    <tr>
-        <th>Column 1</th>
-        <th>Column 2</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
 <!-- start: Content -->
-<div id="content" class="span10">
+<div id="content" class="span10" style="background: white">
     <div class="row-fluid">
         <ul id="myTab" class="nav nav-tabs">
             <li class="active">
@@ -115,7 +103,9 @@
         });
     }
 </script>
-
+<footer style="position: absolute;bottom: 5px;width: 100%">
+    <img src="/static/img/logo_firetech.svg">
+</footer>
 </body>
 
 </html>

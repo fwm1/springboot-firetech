@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="/static/css/style-responsive.min.css"/>
     <script src="/static/js/myscript.js"></script>
 </head>
-<body>
+<body style="background: lightgray;">
 <%@include file="head.html"%>
 <!-- start: Content -->
-<div id="content" class="span10">
+<div id="content" class="span10" style="background: white;" >
     <div class="row-fluid">
         <ul id="myTab" class="nav nav-tabs">
             <li class="active"><a href="#user" data-toggle="tab" id="a-user">用户</a></li>
@@ -208,8 +208,8 @@
                                         <c:forEach items="${script.routeList}" var="route">
                                             <li>
                                                 <dl class="dl-horizontal">
-                                                <dt>${route.routeName}</dt>
-                                                <dd>${route.routeInstruct} ==> ${route.outIp} & ${route.info}</dd>
+                                                    <dt>${route.routeName}</dt>
+                                                    <dd>${route.routeInstruct} ==> ${route.outIp} & ${route.info}</dd>
                                                 </dl>
                                             </li>
                                         </c:forEach>
@@ -231,7 +231,7 @@
             </div>
         </div>
     </div>
-</div>
+</div st>
 <!-- end: Content -->
 <div class="modal fade" id="myModal_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -421,10 +421,8 @@
         </div>
     </div>
 </div>
-
-<script>
-
-</script>
+<footer style="position: absolute;bottom: 10px;width: 100%">
+    <img src="/static/img/logo_firetech.svg">
+</footer>
 </body>
-
 </html>
