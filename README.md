@@ -6,21 +6,19 @@ springboot+springsecurity+mybatis
 
 2.spring.datasource.driver-class-name=org.sqlite.JDBC
   spring.datasource.jdbc-url=jdbc:sqlite:F:/sqlite.db
-
-2018.8.1
+  
 3.springsecurity可以取得UserDetail但是得不到username：
 	mybatis属性和字段映射要写完整,否则无法正确构造SystemUser对象
+	
 4.jsp获取登录用户名：
 	${pageContext.request.remoteUser}
 
-2018.8.6
 5.在没有用ajax发送http请求的时候,在controller中可以通过return "redirect:/user/list";的方式进行页面跳转.
   在使用ajax对表单数据进行封装,并发送至controller进行处理后就不能用以往的方法进行处理, 而需要在ajax提交的函数里进行跳转的设置:
 window.location.href="/busasst/user/linestation";
 
 6.ajax向后台发送请求时，dataType指的是"后台"预期的返回数据类型，若后台没有返回数据或者返回数据不一致则会执行error的回调函数， 前台记得加上@ResponseBody，才能回调ajax的success函数
 
-2018.8.8
 7.Spring Boot 打jar包 无法响应jsp 问题
 	1)增加jsp依赖
 	2)编译插件版本指定1.4.2
@@ -40,6 +38,7 @@ window.location.href="/busasst/user/linestation";
        4)application 配置
          spring.mvc.view.prefix=/WEB-INF/views/
          spring.mvc.view.suffix=.jsp
+	 
 8.RequestMapping("/login")
 	return "login"
 可能会引起循环viewResolve！！！！
@@ -53,13 +52,15 @@ window.location.href="/busasst/user/linestation";
 	<col style="width:15%">
 	<col style="width:15%">
 </colgroup>
+
 10.jstl c:when判断字符串相等 <c:when test="${user.currentRoute eq route.routeName}">
+
 11.javascript
    === 表示恒等，首先比较两边的变量数据类型是否相等，其次比较两边的变量的数值是否相等,
   NaN和其他任何值都是不相等的，包括它本身！！！通过x!==x来判断x是否为NaN，只有在x为NaN的时候，这个表达式的值才为true。
    ==类型转换后相等，比如 "1"==1 :true
    ===不转换进行比较，比如 "1" === 1 :false
    
-   
-   springboot本身不支持jsp， 因此目录下默认没有webapp， 导致找不到jsp文件(WhiteLabel Error Page)，解决办法：
+  
+12.springboot本身不支持jsp， 因此目录下默认没有webapp， 导致找不到jsp文件(WhiteLabel Error Page)，解决办法：
 	Project Structure --> Modules -->添加web,并将web resource path指向webapp目录
