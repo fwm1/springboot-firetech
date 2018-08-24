@@ -5,7 +5,7 @@
 	spring.mvc.static-path-pattern=/static/**
 
 * spring.datasource.driver-class-name=org.sqlite.JDBC
-  spring.datasource.jdbc-url=jdbc:sqlite:F:/sqlite.db
+  spring.datasource.jdbc-url=jdbc:sqlite:./sqlite.db 
   
 * springsecurity可以取得UserDetail但是得不到username：
 	mybatis属性和字段映射要写完整,否则无法正确构造SystemUser对象
