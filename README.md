@@ -29,7 +29,7 @@ window.location.href="/busasst/user/linestation";
    		<version>1.4.2.RELEASE</version>
 	</plugin>
 	```
-	** <!-- 将src/main/webapp下的所有文件文件编译到classes/META-INF/resources下-->
+	**  将src/main/webapp下的所有文件文件编译到classes/META-INF/resources下
 	```
 	<resource>
    		<directory>src/main/webapp</sdirectory>
