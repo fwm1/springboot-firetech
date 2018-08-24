@@ -1,5 +1,5 @@
 # NOTE
-springboot+springsecurity+mybatis
+
 1.springsecurity会拦截静态资源，需要配置；
   springboot默认静态资源在/resources/static下,但如果要在static下加子文件夹的话，还是需要配置, 若还是莫名 bug 尝试maven clean重新编译
 	spring.mvc.static-path-pattern=/static/**
