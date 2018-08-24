@@ -59,3 +59,7 @@ window.location.href="/busasst/user/linestation";
   NaN和其他任何值都是不相等的，包括它本身！！！通过x!==x来判断x是否为NaN，只有在x为NaN的时候，这个表达式的值才为true。
    ==类型转换后相等，比如 "1"==1 :true
    ===不转换进行比较，比如 "1" === 1 :false
+   
+   
+   springboot本身不支持jsp， 因此目录下默认没有webapp， 导致找不到jsp文件(WhiteLabel Error Page)，解决办法：
+	Project Structure --> Modules -->添加web,并将web resource path指向webapp目录
